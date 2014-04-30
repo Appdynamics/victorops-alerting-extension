@@ -1,0 +1,17 @@
+#VictorOps Org Key
+voOrganizationKey: ""
+
+#VictorOps Routing Key
+voRoutingKey: ""
+
+#scheme used (http/https)
+protocol: "https"
+
+#VictorOps host
+voAlertHost: "alert.victorops.com"
+
+
+
+
+
+

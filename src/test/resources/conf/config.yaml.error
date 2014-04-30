@@ -1,0 +1,9 @@
+
+
+#http timeouts
+connectionTimeout: 20000
+socketTimeout: 20000
+
+
+
+

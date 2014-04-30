@@ -1,0 +1,21 @@
+#VictorOps Org Key
+voOrganizationKey: "d5d53d3e-6439-499f-9dc7-6934af2aa7e0"
+
+#VictorOps Routing Key
+voRoutingKey: "everyone"
+
+#scheme used (http/https)
+protocol: "https"
+
+#VictorOps host
+voAlertHost: "alert.victorops.com"
+
+#VictorOps url path
+voAlertUrlPath: "/integrations/generic/20131114/alert"
+
+#http timeouts
+connectTimeout: 10000
+socketTimeout: 10000
+
+
+
