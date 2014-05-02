@@ -3,11 +3,11 @@ victorops-alerting-extension
 This alerting extension is only meant for on-premise or dedicated controllers.
 
 ## Use Case
-VictorOps is a on-call management + incident notification platform. The VictorOps alerting extension enables AppDynamics to post health rule violation events as custom alerts to VictopOps. The payload of the alert has a link to AppDynamics for a thorough diagnosis of the event.
+VictorOps is an on-call management + incident notification platform. The VictorOps alerting extension enables AppDynamics to post health rule violation events as custom alerts to VictopOps. The payload of the alert has a link to AppDynamics for a thorough diagnosis of the event.
 
 ### Prerequisites
 
-- You have a VictorOps Organization Key and Routing Key
+- You should have a VictorOps Organization Key and Routing Key
 
 ### Steps
 
@@ -44,7 +44,30 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
   Uncomment the appropriate executable tag based on windows or linux/unix machine.
 
 5. Update the config.yaml file in <CONTROLLER_HOME_DIR>/custom/actions/victorops-alert/conf/ directory with the Organization Key, Routing Key. You can also configure the level of details sent to VictorOps.
-
+	
+  ```
+	#VictorOps Org Key
+	voOrganizationKey: ""
+	
+	#VictorOps Routing Key
+	voRoutingKey: ""
+	
+	#scheme used (http/https)
+	protocol: "https"
+	
+	#VictorOps host
+	voAlertHost: "alert.victorops.com"
+	
+	#VictorOps url path
+	voAlertUrlPath: "/integrations/generic/20131114/alert"
+	
+	#http timeouts
+	connectTimeout: 10000
+	socketTimeout: 10000
+	
+	#control level of details in VO alert
+	showDetails: false
+  ```
 
 6. Installing Custom Actions:
 
@@ -55,7 +78,7 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
 Now you are ready to use this extension as a custom action. In the AppDynamics UI, go to Alert & Respond -> Actions. Click Create Action. Select Custom Action and click OK. In the drop-down menu you can find the action called 'victorops-alert'.
 
 ## VictorOps Alert ##
-![]()
+![](https://raw.githubusercontent.com/Appdynamics/victorops-alerting-extension/master/victorops-alert.png?token=7142645__eyJzY29wZSI6IlJhd0Jsb2I6QXBwZHluYW1pY3MvdmljdG9yb3BzLWFsZXJ0aW5nLWV4dGVuc2lvbi9tYXN0ZXIvdmljdG9yb3BzLWFsZXJ0LnBuZyIsImV4cGlyZXMiOjEzOTk2MDI0MTd9--830fafa2ed9a679dd48a4c68de51db5f11a88568)
 
 ##Contributing
 
