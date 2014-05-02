@@ -18,22 +18,24 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
 3. Unzip the victorops-alert.zip file into <CONTROLLER_HOME_DIR>/custom/actions/ . You should have  <CONTROLLER_HOME_DIR>/custom/actions/victorops-alert created.  
 
 4. Check if you have custom.xml file in <CONTROLLER_HOME_DIR>/custom/actions/ directory. If yes, add the following xml to the <custom-actions> element.
+
   ``
   <action>
 		  <type>hipchat-alert</type>
       <!-- For Linux/Unix *.sh -->
- 		  executable>victorops-alert.sh</executable 
+ 		  <executable>victorops-alert.sh</executable>
       <!-- For windows *.bat -->
  		  <!--<executable>victorops-alert.bat</executable>-->
- 	</action>
+  </action>
   ``
   If you don't have custom.xml already, create one with the below xml content
+
   ``
-    <custom-actions>
+  <custom-actions>
       <action>
   		  <type>hipchat-alert</type>
         <!-- For Linux/Unix *.sh -->
-   		  executable>victorops-alert.sh</executable 
+   		  <executable>victorops-alert.sh</executable>
         <!-- For windows *.bat -->
    		  <!--<executable>victorops-alert.bat</executable>-->
  	    </action>
@@ -44,13 +46,16 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
 5. Update the config.yaml file in <CONTROLLER_HOME_DIR>/custom/actions/victorops-alert/conf/ directory with the Organization Key, Routing Key. You can also configure the level of details sent to VictorOps.
 
 
-8. Installing Custom Actions:
+6. Installing Custom Actions:
 
       To create a Custom Action, first refer to the the following topics (requires login):
-      * [Creating custom action](http://docs.appdynamics.com/display/PRO13S/Custom+Actions)
-      * [Build an Alerting Extension](http://docs.appdynamics.com/display/PRO13S/Build+an+Alerting+Extension)
+      * [Creating custom action](http://docs.appdynamics.com/display/PRO14S/Custom+Actions)
+      * [Build an Alerting Extension](http://docs.appdynamics.com/display/PRO14S/Build+an+Alerting+Extension)
 
 Now you are ready to use this extension as a custom action. In the AppDynamics UI, go to Alert & Respond -> Actions. Click Create Action. Select Custom Action and click OK. In the drop-down menu you can find the action called 'victorops-alert'.
+
+## VictorOps Alert ##
+![]()
 
 ##Contributing
 
@@ -60,4 +65,6 @@ Find out more in the [AppDynamics Exchange](http://community.appdynamics.com/t5/
 
 For any questions or feature request, please contact [AppDynamics Center of Excellence](mailto:ace-request@appdynamics.com).
 
+**Version:** 1.0
+**Controller Compatibility:** 3.7+
 
