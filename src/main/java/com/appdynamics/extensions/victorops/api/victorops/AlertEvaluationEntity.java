@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.victorops.api.appdynamics;
+package com.appdynamics.extensions.victorops.api.victorops;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,13 +6,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EvaluationEntity {
-
+public class AlertEvaluationEntity {
+    @JsonProperty("Entity type")
     String type;
+
+    @JsonProperty("Entity name")
     String name;
+
+    @JsonProperty("Entity id")
     String id;
+
+    @JsonProperty("No of triggered conds")
     String numberOfTriggeredConditions;
-    List<TriggerCondition> triggeredConditions = new ArrayList<TriggerCondition>();
+
+    @JsonProperty("Triggerd Conds")
+    List<AlertTriggeredCondition> triggeredConditions = new ArrayList<AlertTriggeredCondition>();
 
     public String getType() {
         return type;
@@ -46,11 +54,11 @@ public class EvaluationEntity {
         this.id = id;
     }
 
-    public List<TriggerCondition> getTriggeredConditions() {
+    public List<AlertTriggeredCondition> getTriggeredConditions() {
         return triggeredConditions;
     }
 
-    public void setTriggeredConditions(List<TriggerCondition> triggeredConditions) {
+    public void setTriggeredConditions(List<AlertTriggeredCondition> triggeredConditions) {
         this.triggeredConditions = triggeredConditions;
     }
 }

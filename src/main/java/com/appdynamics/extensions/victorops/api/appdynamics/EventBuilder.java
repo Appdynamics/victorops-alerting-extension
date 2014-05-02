@@ -1,6 +1,7 @@
 package com.appdynamics.extensions.victorops.api.appdynamics;
 
 
+import com.appdynamics.extensions.victorops.Configuration;
 import org.apache.log4j.Logger;
 import com.appdynamics.extensions.victorops.common.StringHelper;
 
@@ -18,10 +19,11 @@ public class EventBuilder {
      * @param args
      * @return Event
      */
-    public Event build(String[] args) {
+    public Event build(String[] args,Configuration configuration) {
         if (isEventValid(args) && isHealthRuleViolationEvent(args[(args.length - 1)])) {
             String[] cleanedArgs = cleanArgs(args);
-            HealthRuleViolationEvent event = createHealthRuleViolationEvent(cleanedArgs);
+            boolean showDetails = Boolean.valueOf(configuration.getShowDetails());
+            HealthRuleViolationEvent event = createHealthRuleViolationEvent(cleanedArgs,showDetails);
             return event;
         }
         logger.error("Event is not valid. Args passed are ::" + args);
@@ -36,7 +38,7 @@ public class EventBuilder {
         return false;
     }
 
-    HealthRuleViolationEvent createHealthRuleViolationEvent(String[] cleanedArgs) {
+    HealthRuleViolationEvent createHealthRuleViolationEvent(String[] cleanedArgs,boolean showDetails) {
         HealthRuleViolationEvent event = new HealthRuleViolationEvent();
         event.setAppName(cleanedArgs[0]);
         event.setAppID(cleanedArgs[1]);
@@ -50,11 +52,85 @@ public class EventBuilder {
         event.setAffectedEntityType(cleanedArgs[9]);
         event.setAffectedEntityName(cleanedArgs[10]);
         event.setAffectedEntityID(cleanedArgs[11]);
+        if(showDetails){
+            setEvaluationDetails(event,cleanedArgs);
+        }
         event.setSummaryMessage(cleanedArgs[cleanedArgs.length - 4]);
         event.setIncidentID(cleanedArgs[cleanedArgs.length - 3]);
         event.setDeepLinkUrl(cleanedArgs[cleanedArgs.length - 2]);
         event.setEventType(cleanedArgs[cleanedArgs.length - 1]);
         return event;
+    }
+
+    private int setEvaluationDetails(HealthRuleViolationEvent event, String[] cleanedArgs) {
+        int currentArgPos = 12;
+        try {
+            int numOfEvaluationEntities = Integer.parseInt(cleanedArgs[12]);
+            for(int index = 1; index <= numOfEvaluationEntities; index++){
+                EvaluationEntity eval = new EvaluationEntity();
+                currentArgPos++;
+                eval.setType(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eval.setName(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eval.setId(cleanedArgs[currentArgPos]);
+                currentArgPos = setTriggeredConditionDetails(eval,cleanedArgs,currentArgPos);
+                event.getEvaluationEntity().add(eval);
+            }
+        }
+        catch(NumberFormatException nfe){
+            logger.error("Cannot convert string to int because of mismatch of arguments ",nfe);
+        }
+        return currentArgPos;
+    }
+
+    private int setTriggeredConditionDetails(EvaluationEntity eval, String[] cleanedArgs, int currentArgPos) {
+        try{
+            currentArgPos++;
+            int numOfTriggeredCond = Integer.parseInt(cleanedArgs[currentArgPos]);
+            eval.setNumberOfTriggeredConditions(cleanedArgs[currentArgPos]);
+            for (int index=1; index <= numOfTriggeredCond; index++){
+                TriggerCondition triggerCond = new TriggerCondition();
+                currentArgPos++;
+                triggerCond.setScopeType(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setScopeName(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setScopeId(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setConditionName(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setConditionId(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setOperator(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setConditionUnitType(cleanedArgs[currentArgPos]);
+                if(triggerCond.getConditionUnitType() != null &&  triggerCond.getConditionUnitType().toUpperCase().startsWith("BASELINE")){
+                    currentArgPos = setBaseLineDetails(triggerCond,cleanedArgs,currentArgPos);
+                }
+                currentArgPos++;
+                triggerCond.setThresholdValue(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                triggerCond.setObservedValue(cleanedArgs[currentArgPos]);
+                eval.getTriggeredConditions().add(triggerCond);
+            }
+        }
+        catch(NumberFormatException nfe){
+            logger.error("Cannot convert string to int because of mismatch of arguments", nfe);
+        }
+        return currentArgPos;
+    }
+
+    private int setBaseLineDetails(TriggerCondition triggerCond, String[] cleanedArgs, int currentArgPos) {
+        currentArgPos++;
+        triggerCond.setUseDefaultBaseline(Boolean.valueOf(cleanedArgs[currentArgPos]));
+        if(!triggerCond.isUseDefaultBaseline()){
+            currentArgPos++;
+            triggerCond.setBaselineName(cleanedArgs[currentArgPos]);
+            currentArgPos++;
+            triggerCond.setBaselineId(cleanedArgs[currentArgPos]);
+        }
+        return currentArgPos;
     }
 
 

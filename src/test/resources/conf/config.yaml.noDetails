@@ -14,11 +14,8 @@ voAlertHost: "alert.victorops.com"
 voAlertUrlPath: "/integrations/generic/20131114/alert"
 
 #http timeouts
-connectTimeout: 10000
-socketTimeout: 10000
+connectTimeout: 20000
+socketTimeout: 20000
 
 #show appdynamics details in VO alert
 showDetails: false
-
-
-

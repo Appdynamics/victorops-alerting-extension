@@ -1,7 +1,11 @@
 package com.appdynamics.extensions.victorops.api.victorops;
 
 
+import com.appdynamics.extensions.victorops.api.appdynamics.EvaluationEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AlertDetails {
 
@@ -28,6 +32,17 @@ public class AlertDetails {
 
     @JsonProperty("Incident ID")
     private String incidentId;
+
+    @JsonProperty("Evaluation Entities")
+    private List<AlertEvaluationEntity> evaluationEntities = new ArrayList<AlertEvaluationEntity>();
+
+    public List<AlertEvaluationEntity> getEvaluationEntities() {
+        return evaluationEntities;
+    }
+
+    public void setEvaluationEntities(List<AlertEvaluationEntity> evaluationEntities) {
+        this.evaluationEntities = evaluationEntities;
+    }
 
     public String getApplicationName() {
         return applicationName;
@@ -92,4 +107,6 @@ public class AlertDetails {
     public void setIncidentId(String incidentId) {
         this.incidentId = incidentId;
     }
+
+
 }

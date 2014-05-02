@@ -10,6 +10,15 @@ public class Configuration {
     private String connectTimeout = "10000";
     private String socketTimeout = "10000";
     private String voAlertUrlPath;
+    private String showDetails = "false";
+
+    public String getShowDetails() {
+        return showDetails;
+    }
+
+    public void setShowDetails(String showDetails) {
+        this.showDetails = showDetails;
+    }
 
     public String getVoOrganizationKey() {
         return voOrganizationKey;
@@ -66,5 +75,6 @@ public class Configuration {
     public void setVoAlertUrlPath(String voAlertUrlPath) {
         this.voAlertUrlPath = voAlertUrlPath;
     }
+
 
 }

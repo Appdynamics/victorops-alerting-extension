@@ -67,7 +67,7 @@ public class VictorOpsAlertExtension {
      * @return -1 incase of an error else 1;
      */
     public int processAnEvent(String[] args) {
-        Event event = eventBuilder.build(args);
+        Event event = eventBuilder.build(args,config);
         if (event != null) {
             HealthRuleViolationEvent violationEvent = (HealthRuleViolationEvent) event;
             Alert alert = alertBuilder.buildAlert(violationEvent, config);

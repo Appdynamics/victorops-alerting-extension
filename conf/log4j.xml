@@ -17,7 +17,7 @@
   </appender> 
   
   <logger name="com.appdynamics.extensions.victorops" additivity="false">
-	<level value="debug"/>
+	<level value="info"/>
 	<appender-ref ref="RollingFileAppender"/>
 	<appender-ref ref="ConsoleAppender"/>
   </logger>

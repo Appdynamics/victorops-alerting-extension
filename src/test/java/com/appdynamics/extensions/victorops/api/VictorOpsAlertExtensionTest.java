@@ -19,7 +19,7 @@ public class VictorOpsAlertExtensionTest {
     public void canPostHRViolationEventWithOneEvalEntityAndTriggerNoBaselineToVictorOps() throws FileNotFoundException {
         Configuration configuration = configUtil.readConfig(this.getClass().getResource("/conf/config.yaml").getFile(),Configuration.class);
         VictorOpsAlertExtension alertExtension = new VictorOpsAlertExtension(configuration);
-        alertExtension.processAnEvent(eventArgs.getHealthRuleViolationEventWithOneEvalEntityAndTriggerNoBaseline());
+        alertExtension.processAnEvent(eventArgs.getHealthRuleViolationEventWithMultipleEvalEntityAndMultipleTriggerBaseline());
     }
 
 

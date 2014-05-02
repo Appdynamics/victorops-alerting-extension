@@ -1,7 +1,9 @@
 package com.appdynamics.extensions.victorops.api.victorops;
 
 import com.appdynamics.extensions.victorops.Configuration;
+import com.appdynamics.extensions.victorops.api.appdynamics.EvaluationEntity;
 import com.appdynamics.extensions.victorops.api.appdynamics.HealthRuleViolationEvent;
+import com.appdynamics.extensions.victorops.api.appdynamics.TriggerCondition;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
@@ -70,7 +72,41 @@ public class AlertBuilder {
         details.setAffectedEntityType(violationEvent.getAffectedEntityType());
         details.setAffectedEntityName(violationEvent.getAffectedEntityName());
         details.setIncidentId(violationEvent.getIncidentID());
+        for(EvaluationEntity eval : violationEvent.getEvaluationEntity()){
+            AlertEvaluationEntity alertEval = buildAlertEvalutionEntity(eval);
+            details.getEvaluationEntities().add(alertEval);
+        }
         return details;
+    }
+
+    private AlertEvaluationEntity buildAlertEvalutionEntity(EvaluationEntity eval) {
+        AlertEvaluationEntity alertEval = new AlertEvaluationEntity();
+        alertEval.setName(eval.getName());
+        alertEval.setId(eval.getId());
+        alertEval.setType(eval.getType());
+        alertEval.setNumberOfTriggeredConditions(eval.getNumberOfTriggeredConditions());
+        for(TriggerCondition tc : eval.getTriggeredConditions()){
+            AlertTriggeredCondition alertTrigger =  buildAlertTriggeredConditions(tc);
+            alertEval.getTriggeredConditions().add(alertTrigger);
+        }
+        return alertEval;
+    }
+
+    private AlertTriggeredCondition buildAlertTriggeredConditions(TriggerCondition tc) {
+        AlertTriggeredCondition alertTrigger = new AlertTriggeredCondition();
+        alertTrigger.setScopeName(tc.getScopeName());
+        alertTrigger.setScopeId(tc.getScopeId());
+        alertTrigger.setScopeType(tc.getScopeType());
+        alertTrigger.setConditionName(tc.getConditionName());
+        alertTrigger.setConditionUnitType(tc.getConditionUnitType());
+        alertTrigger.setConditionId(tc.getConditionId());
+        alertTrigger.setBaselineId(tc.getBaselineId());
+        alertTrigger.setBaselineName(tc.getBaselineName());
+        alertTrigger.setUseDefaultBaseline(tc.isUseDefaultBaseline());
+        alertTrigger.setOperator(tc.getOperator());
+        alertTrigger.setObservedValue(tc.getObservedValue());
+        alertTrigger.setThresholdValue(tc.getThresholdValue());
+        return alertTrigger;
     }
 
 
