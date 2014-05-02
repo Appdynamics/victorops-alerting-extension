@@ -21,7 +21,7 @@ VictorOps is an on-call management + incident notification platform. The VictorO
 
   ```
   <action>
-		  <type>hipchat-alert</type>
+		  <type>victorops-alert</type>
       <!-- For Linux/Unix *.sh -->
  		  <executable>victorops-alert.sh</executable>
       <!-- For windows *.bat -->
@@ -33,7 +33,7 @@ VictorOps is an on-call management + incident notification platform. The VictorO
   ```
   <custom-actions>
       <action>
-  		  <type>hipchat-alert</type>
+  		  <type>victorops-alert</type>
         <!-- For Linux/Unix *.sh -->
    		  <executable>victorops-alert.sh</executable>
         <!-- For windows *.bat -->
