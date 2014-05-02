@@ -3,18 +3,18 @@ package com.appdynamics.extensions.victorops.api.appdynamics;
 
 public class TriggerCondition {
 
-     String scopeType;
-     String scopeName;
-     String scopeId;
-     String conditionName;
-     String conditionId;
-     String operator;
-     String conditionUnitType;
-     boolean useDefaultBaseline;
-     String baselineName;
-     String baselineId;
-     String thresholdValue;
-     String observedValue;
+    private String scopeType;
+    private String scopeName;
+    private String scopeId;
+    private String conditionName;
+    private String conditionId;
+    private String operator;
+    private String conditionUnitType;
+    private boolean useDefaultBaseline;
+    private String baselineName;
+    private String baselineId;
+    private String thresholdValue;
+    private String observedValue;
 
     public String getScopeType() {
         return scopeType;

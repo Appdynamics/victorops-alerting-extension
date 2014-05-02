@@ -71,4 +71,16 @@ public class EventBuilderTest {
         Assert.assertTrue(event instanceof HealthRuleViolationEvent);
         Assert.assertTrue(((HealthRuleViolationEvent) event).getEvaluationEntity().size() == 0);
     }
+
+    @Test
+    public void buildOtherEvent() throws FileNotFoundException {
+        Configuration configuration = configUtil.readConfig(this.getClass().getResource("/conf/config.yaml").getFile(),Configuration.class);
+        String[] args = eventArgs.getOtherEvent();
+        Event event = eventBuilder.build(args,configuration);
+        Assert.assertTrue(event != null);
+        Assert.assertTrue(event instanceof OtherEvent);
+        Assert.assertTrue(((OtherEvent) event).getEventTypes().size() == 2);
+        Assert.assertTrue(((OtherEvent) event).getEventSummaries().size() == 2);
+    }
+
 }

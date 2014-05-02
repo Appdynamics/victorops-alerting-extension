@@ -6,40 +6,40 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AlertTriggeredCondition {
 
     @JsonProperty("Scope Type")
-    String scopeType;
+    private String scopeType;
 
     @JsonProperty("Scope Name")
-    String scopeName;
+    private String scopeName;
 
     @JsonProperty("Scope ID")
-    String scopeId;
+    private String scopeId;
 
     @JsonProperty("Condition Name")
-    String conditionName;
+    private String conditionName;
 
     @JsonProperty("Condition Id")
-    String conditionId;
+    private String conditionId;
 
     @JsonProperty("Operator")
-    String operator;
+    private String operator;
 
     @JsonProperty("Condition Unit Type")
-    String conditionUnitType;
+    private String conditionUnitType;
 
     @JsonProperty("Use Default Baseline")
-    boolean useDefaultBaseline;
+    private boolean useDefaultBaseline;
 
     @JsonProperty("Baseline name")
-    String baselineName;
+    private String baselineName;
 
     @JsonProperty("Baseline id")
-    String baselineId;
+    private String baselineId;
 
     @JsonProperty("Threshold value")
-    String thresholdValue;
+    private String thresholdValue;
 
     @JsonProperty("Observed value")
-    String observedValue;
+    private String observedValue;
 
     public String getScopeType() {
         return scopeType;

@@ -2,7 +2,6 @@ package com.appdynamics.extensions.victorops.common;
 
 
 import com.appdynamics.extensions.victorops.Configuration;
-import com.appdynamics.extensions.victorops.VictorOpsAlertExtension;
 import org.apache.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;

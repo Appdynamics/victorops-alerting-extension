@@ -178,9 +178,45 @@ public class EventArgs {
         return Iterables.toArray(strings,String.class);
     }
 
+    public String[] getOtherEvent(){
+        List<String> strings = Lists.newArrayList();
+        strings.add("\"MyMacMachineAgent\""); //appname
+        strings.add("\"4\""); //appID
+        strings.add("\"Wed Apr 30 09:42:55 PDT 2014\""); //event notification time
+        strings.add("\"1\""); //priority
+        strings.add("\"ERROR\""); //severity
+        strings.add("\"VictorOpsAction\"");  //tag
+        strings.add("\"App Server restart\"");  //event notification name
+        strings.add("\"24\"");  //event notification id
+        strings.add("\"2\"");  //event notification time period in mins
+        strings.add("\"2\"");  //number of event types
+
+        strings.add("\"ERROR\"");  //event type 1
+        strings.add("\"2\""); //event type num 1
+        strings.add("\"AGENT_STATUS\"");  //event type 1
+        strings.add("\"1\""); //event type num 1
+
+        strings.add("\"2\""); // num event summaries
+
+        strings.add("\"I\""); //event summary id 1
+        strings.add("\"Wed Apr 30 09:42:55 PDT 2014\""); //event summary time 1
+        strings.add("APP_SERVER_RESTART"); //event summary type 1
+        strings.add("ERROR"); //event summary severity 1
+        strings.add("summary string"); //event summary string 1
+
+        strings.add("\"II\""); //event summary id 2
+        strings.add("\"Wed Apr 30 09:42:55 PDT 2014\""); //event summary time 2
+        strings.add("DIAGNOSTIC_SESSION"); //event summary type 2
+        strings.add("WARN"); //event summary severity 2
+        strings.add("summary string"); //event summary string 2
+
+        strings.add("\"http://PRINHYLTPHP0158:8090/controller/#location=APP_EVENT_VIEWER_MODAL&eventSummary=\"");
+        return Iterables.toArray(strings,String.class);
+    }
+
     private void generateTrailingArg(List<String> strings) {
         //summary message
-        strings.add("\"CPU utilization is too high triggered at Wed Apr 30 09:42:55 PDT 2014. This policy was violated because the following conditions were met for the MyMacMachineAgentNode1 Node for the last 1 minute(s):   For Evaluation Entity: MyMacMachineAgentNode1 Node - Hardware Resources|CPU|%Busy Condition is greater than 4. Observed value = 40.0\"");  //observed value 1
+        strings.add("\"CPU utilization is too high triggerded at Wed Apr 30 09:42:55 PDT 2014. This policy was violated because the following conditions were met for the MyMacMachineAgentNode1 Node for the last 1 minute(s):   For Evaluation Entity: MyMacMachineAgentNode1 Node - Hardware Resources|CPU|%Busy Condition is greater than 4. Observed value = 40.0\"");  //observed value 1
         strings.add("\"3\"");  //incident id
         strings.add("\"http://WIN-OAR4D8QEG3K:8090/controller/#location=APP_INCIDENT_DETAIL&incident=\"");  //deep link url
         strings.add("\"POLICY_OPEN_CRITICAL\"");  //event type

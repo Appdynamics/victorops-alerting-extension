@@ -15,7 +15,7 @@ public class AlertBuilderTest {
     public void canSerializeHealthRuleViolationIntoAlertJson() throws JsonProcessingException {
         HealthRuleViolationEvent hrv = createHealthRuleViolationEvent();
         Configuration config = createConfig();
-        Alert alert = alertBuilderTest.buildAlert(hrv,config);
+        Alert alert = alertBuilderTest.buildAlertFromHealthRuleViolationEvent(hrv, config);
         String alertJson = alertBuilderTest.convertIntoJsonString(alert);
         Assert.assertTrue(alertJson != null);
     }

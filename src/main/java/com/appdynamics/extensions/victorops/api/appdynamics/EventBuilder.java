@@ -2,8 +2,8 @@ package com.appdynamics.extensions.victorops.api.appdynamics;
 
 
 import com.appdynamics.extensions.victorops.Configuration;
-import org.apache.log4j.Logger;
 import com.appdynamics.extensions.victorops.common.StringHelper;
+import org.apache.log4j.Logger;
 
 /**
  * Builds an event from command line arguments.
@@ -20,17 +20,82 @@ public class EventBuilder {
      * @return Event
      */
     public Event build(String[] args,Configuration configuration) {
-        if (isEventValid(args) && isHealthRuleViolationEvent(args[(args.length - 1)])) {
+        if (isEventValid(args)) {
             String[] cleanedArgs = cleanArgs(args);
             boolean showDetails = Boolean.valueOf(configuration.getShowDetails());
-            HealthRuleViolationEvent event = createHealthRuleViolationEvent(cleanedArgs,showDetails);
-            return event;
+            if(isOtherEvent(cleanedArgs[(cleanedArgs.length - 1)])) { // if the last arg starts with http then other event else health rule violation event. (hackish :-/)
+                OtherEvent otherEvent = createOtherEvent(cleanedArgs,showDetails);
+                return otherEvent;
+            }
+            else{
+                HealthRuleViolationEvent event = createHealthRuleViolationEvent(cleanedArgs,showDetails);
+                return event;
+            }
         }
         logger.error("Event is not valid. Args passed are ::" + args);
         return null;
     }
 
-    boolean isEventValid(String[] args) {
+    private OtherEvent createOtherEvent(String[] cleanedArgs, boolean showDetails) {
+        OtherEvent otherEvent = new OtherEvent();
+        setBasicEvent(cleanedArgs, otherEvent);
+        otherEvent.setEventNotificationTime(cleanedArgs[2]);
+        otherEvent.setEventNotificationName(cleanedArgs[6]);
+        otherEvent.setEventNotificationId(cleanedArgs[7]);
+        otherEvent.setEventNotificationIntervalInMin(cleanedArgs[8]);
+        if(showDetails){
+            setOtherEventDetails(otherEvent, cleanedArgs);
+        }
+        otherEvent.setDeepLinkUrl(cleanedArgs[cleanedArgs.length - 1]);
+        return otherEvent;
+    }
+
+    private void setOtherEventDetails(OtherEvent otherEvent, String[] cleanedArgs) {
+        int currentArgPos = 9;
+        try {
+            int numOfEventTypes = Integer.parseInt(cleanedArgs[currentArgPos]);
+            otherEvent.setNumberOfEventTypes(cleanedArgs[currentArgPos]);
+            for(int index = 1; index <= numOfEventTypes; index++){
+                EventType eventType = new EventType();
+                currentArgPos++;
+                eventType.setEventType(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eventType.setEventTypeNum(cleanedArgs[currentArgPos]);
+                otherEvent.getEventTypes().add(eventType);
+            }
+            setEventSummary(otherEvent, cleanedArgs, currentArgPos);
+        }
+        catch(NumberFormatException nfe){
+            logger.error("Cannot convert string to int because of mismatch of arguments ",nfe);
+        }
+    }
+
+    private void setEventSummary(OtherEvent otherEvent, String[] cleanedArgs, int currentArgPos) {
+        currentArgPos++;
+        try {
+            int numberOfEventSummaries = Integer.parseInt(cleanedArgs[currentArgPos]);
+            otherEvent.setNumberOfEventSummaries(cleanedArgs[currentArgPos]);
+            for (int index = 1; index <= numberOfEventSummaries; index++) {
+                EventSummary eventSummary = new EventSummary();
+                currentArgPos++;
+                eventSummary.setEventSummaryId(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eventSummary.setEventSummaryTime(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eventSummary.setEventSummaryType(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eventSummary.setEventSummarySeverity(cleanedArgs[currentArgPos]);
+                currentArgPos++;
+                eventSummary.setEventSummaryString(cleanedArgs[currentArgPos]);
+                otherEvent.getEventSummaries().add(eventSummary);
+            }
+        }
+        catch(NumberFormatException nfe){
+            logger.error("Cannot convert string to int because of mismatch of arguments ",nfe);
+        }
+    }
+
+    private boolean isEventValid(String[] args) {
         //TODO kunal.gupta check if this condition makes sense
         if(args != null && args.length > 16){
             return true;
@@ -38,14 +103,10 @@ public class EventBuilder {
         return false;
     }
 
-    HealthRuleViolationEvent createHealthRuleViolationEvent(String[] cleanedArgs,boolean showDetails) {
+    private HealthRuleViolationEvent createHealthRuleViolationEvent(String[] cleanedArgs,boolean showDetails) {
         HealthRuleViolationEvent event = new HealthRuleViolationEvent();
-        event.setAppName(cleanedArgs[0]);
-        event.setAppID(cleanedArgs[1]);
+        setBasicEvent(cleanedArgs, event);
         event.setPvnAlertTime(cleanedArgs[2]);
-        event.setPriority(cleanedArgs[3]);
-        event.setSeverity(cleanedArgs[4]);
-        event.setTag(cleanedArgs[5]);
         event.setHealthRuleName(cleanedArgs[6]);
         event.setHealthRuleID(cleanedArgs[7]);
         event.setPvnTimePeriodInMinutes(cleanedArgs[8]);
@@ -60,6 +121,14 @@ public class EventBuilder {
         event.setDeepLinkUrl(cleanedArgs[cleanedArgs.length - 2]);
         event.setEventType(cleanedArgs[cleanedArgs.length - 1]);
         return event;
+    }
+
+    private void setBasicEvent(String[] cleanedArgs, Event event) {
+        event.setAppName(cleanedArgs[0]);
+        event.setAppID(cleanedArgs[1]);
+        event.setPriority(cleanedArgs[3]);
+        event.setSeverity(cleanedArgs[4]);
+        event.setTag(cleanedArgs[5]);
     }
 
     private int setEvaluationDetails(HealthRuleViolationEvent event, String[] cleanedArgs) {
@@ -134,7 +203,7 @@ public class EventBuilder {
     }
 
 
-    String[] cleanArgs(String[] args){
+    private String[] cleanArgs(String[] args){
         StringBuilder sb = new StringBuilder();
         String[] stripped = new String[args.length];
         for (int i = 0; i < args.length; i++) {
@@ -145,10 +214,9 @@ public class EventBuilder {
         return stripped;
     }
 
-    //TODO kunal.gupta fix this hack
-    boolean isHealthRuleViolationEvent(String eventType) {
+    private boolean isOtherEvent(String eventType) {
         if (eventType != null) {
-            return !eventType.startsWith("http") || !eventType.startsWith("https");
+            return eventType.startsWith("http")  || eventType.startsWith("https");
         }
         return false;
     }

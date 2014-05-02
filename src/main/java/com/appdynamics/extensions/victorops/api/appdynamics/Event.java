@@ -2,12 +2,12 @@ package com.appdynamics.extensions.victorops.api.appdynamics;
 
 
 public abstract class Event {
-    String appName;
-    String appID;
-    String priority;
-    String severity;
-    String tag;
-    String deepLinkUrl;
+    private String appName;
+    private String appID;
+    private String priority;
+    private String severity;
+    private String tag;
+    private String deepLinkUrl;
 
     public String getAppName() {
         return appName;

@@ -1,18 +1,16 @@
 package com.appdynamics.extensions.victorops.api.appdynamics;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class EvaluationEntity {
 
-    String type;
-    String name;
-    String id;
-    String numberOfTriggeredConditions;
-    List<TriggerCondition> triggeredConditions = new ArrayList<TriggerCondition>();
+    private String type;
+    private String name;
+    private String id;
+    private String numberOfTriggeredConditions;
+    private List<TriggerCondition> triggeredConditions = new ArrayList<TriggerCondition>();
 
     public String getType() {
         return type;

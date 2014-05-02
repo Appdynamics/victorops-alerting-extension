@@ -4,6 +4,7 @@ import com.appdynamics.extensions.http.Response;
 import com.appdynamics.extensions.victorops.api.appdynamics.Event;
 import com.appdynamics.extensions.victorops.api.appdynamics.EventBuilder;
 import com.appdynamics.extensions.victorops.api.appdynamics.HealthRuleViolationEvent;
+import com.appdynamics.extensions.victorops.api.appdynamics.OtherEvent;
 import com.appdynamics.extensions.victorops.api.victorops.Alert;
 import com.appdynamics.extensions.victorops.api.victorops.AlertBuilder;
 import com.appdynamics.extensions.victorops.common.ConfigUtil;
@@ -38,8 +39,8 @@ public class VictorOpsAlertExtension {
         try {
             config = configUtil.readConfig(CONFIG_FILENAME, Configuration.class);
             VictorOpsAlertExtension alertExtension = new VictorOpsAlertExtension(config);
-            int status = alertExtension.processAnEvent(args);
-            if(status > 0){
+            boolean status = alertExtension.processAnEvent(args);
+            if(status){
                 logger.info( "Victor Ops Extension completed successfully.");
                 return;
             }
@@ -64,13 +65,20 @@ public class VictorOpsAlertExtension {
      * Creates an AppDynamics health rule event from the command line arguments, builds an VictorOps
      * Alert from the health rule event and posts it to VictorOps.
      * @param args
-     * @return -1 incase of an error else 1;
+     * @return false incase of an error else true;
      */
-    public int processAnEvent(String[] args) {
+    public boolean processAnEvent(String[] args) {
         Event event = eventBuilder.build(args,config);
         if (event != null) {
-            HealthRuleViolationEvent violationEvent = (HealthRuleViolationEvent) event;
-            Alert alert = alertBuilder.buildAlert(violationEvent, config);
+            Alert alert = null;
+            if(event instanceof HealthRuleViolationEvent) {
+                HealthRuleViolationEvent violationEvent = (HealthRuleViolationEvent) event;
+                alert = alertBuilder.buildAlertFromHealthRuleViolationEvent(violationEvent, config);
+            }
+            else{
+                OtherEvent otherEvent = (OtherEvent) event;
+                alert = alertBuilder.buildAlertFromOtherEvent(otherEvent,config);
+            }
             if (alert != null) {
                 try {
                     HttpHandler handler = new HttpHandler(config);
@@ -79,7 +87,7 @@ public class VictorOpsAlertExtension {
                     Response response = handler.postAlert(json);
                     if(response != null && response.getStatus() == HttpURLConnection.HTTP_OK){
                         logger.info( "Data successfully posted to VictorOps");
-                        return 1;
+                        return true;
                     }
                     logger.error("Data post failed");
                 } catch (JsonProcessingException e) {
@@ -87,7 +95,7 @@ public class VictorOpsAlertExtension {
                 }
             }
         }
-        return -1;
+        return false;
     }
 
 

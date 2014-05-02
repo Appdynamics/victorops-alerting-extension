@@ -8,19 +8,19 @@ import java.util.List;
 
 public class AlertEvaluationEntity {
     @JsonProperty("Entity type")
-    String type;
+    private String type;
 
     @JsonProperty("Entity name")
-    String name;
+    private String name;
 
     @JsonProperty("Entity id")
-    String id;
+    private String id;
 
     @JsonProperty("No of triggered conds")
-    String numberOfTriggeredConditions;
+    private String numberOfTriggeredConditions;
 
     @JsonProperty("Triggerd Conds")
-    List<AlertTriggeredCondition> triggeredConditions = new ArrayList<AlertTriggeredCondition>();
+    private List<AlertTriggeredCondition> triggeredConditions = new ArrayList<AlertTriggeredCondition>();
 
     public String getType() {
         return type;

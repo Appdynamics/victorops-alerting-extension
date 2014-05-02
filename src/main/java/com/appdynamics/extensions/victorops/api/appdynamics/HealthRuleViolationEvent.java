@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HealthRuleViolationEvent extends Event{
-    String pvnAlertTime;
-    String healthRuleName;
-    String healthRuleID;
-    String pvnTimePeriodInMinutes;
-    String affectedEntityType;
-    String affectedEntityName;
-    String affectedEntityID;
-    List<EvaluationEntity> evaluationEntity = new ArrayList<EvaluationEntity>();
-    String summaryMessage;
-    String incidentID;
-    String eventType;
+    private String pvnAlertTime;
+    private String healthRuleName;
+    private String healthRuleID;
+    private String pvnTimePeriodInMinutes;
+    private String affectedEntityType;
+    private String affectedEntityName;
+    private String affectedEntityID;
+    private List<EvaluationEntity> evaluationEntity = new ArrayList<EvaluationEntity>();
+    private String summaryMessage;
+    private String incidentID;
+    private String eventType;
 
     public String getPvnAlertTime() {
         return pvnAlertTime;
