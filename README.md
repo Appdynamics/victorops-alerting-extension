@@ -3,7 +3,7 @@ victorops-alerting-extension
 This alerting extension is only meant for on-premise or dedicated controllers.
 
 ## Use Case
-VictorOps is an on-call management + incident notification platform. The VictorOps alerting extension enables AppDynamics to post health rule violation events as custom alerts to VictopOps. The payload of the alert has a link to AppDynamics for a thorough diagnosis of the event.
+VictorOps is an on-call management + incident notification platform. The VictorOps alerting extension enables AppDynamics to post AppDynamics events as custom alerts to VictopOps. The payload of the alert has a link to AppDynamics for a thorough diagnosis of the event.
 
 ### Prerequisites
 
