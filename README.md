@@ -19,7 +19,7 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
 
 4. Check if you have custom.xml file in <CONTROLLER_HOME_DIR>/custom/actions/ directory. If yes, add the following xml to the <custom-actions> element.
 
-  ``
+  ```
   <action>
 		  <type>hipchat-alert</type>
       <!-- For Linux/Unix *.sh -->
@@ -27,10 +27,10 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
       <!-- For windows *.bat -->
  		  <!--<executable>victorops-alert.bat</executable>-->
   </action>
-  ``
+  ```
   If you don't have custom.xml already, create one with the below xml content
 
-  ``
+  ```
   <custom-actions>
       <action>
   		  <type>hipchat-alert</type>
@@ -40,7 +40,7 @@ VictorOps is a on-call management + incident notification platform. The VictorOp
    		  <!--<executable>victorops-alert.bat</executable>-->
  	    </action>
     </custom-actions>
-  ``
+  ```
   Uncomment the appropriate executable tag based on windows or linux/unix machine.
 
 5. Update the config.yaml file in <CONTROLLER_HOME_DIR>/custom/actions/victorops-alert/conf/ directory with the Organization Key, Routing Key. You can also configure the level of details sent to VictorOps.
