@@ -1,7 +1,7 @@
-package com.appdynamics.extensions.victorops.api.victorops;
+package com.appdynamics.extensions.victorops.api;
 
+import com.appdynamics.extensions.alerts.customevents.*;
 import com.appdynamics.extensions.victorops.Configuration;
-import com.appdynamics.extensions.victorops.api.appdynamics.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
@@ -28,7 +28,7 @@ public class AlertBuilder {
             alert.setEntityDisplayName(getEntityDisplayName(violationEvent));
             alert.setAdEventType(violationEvent.getEventType());
             alert.setAlertUrl(getAlertUrl(violationEvent));
-            alert.setApDetails(getSummary(violationEvent));
+            alert.setApDetails(getSummary(violationEvent,Boolean.valueOf(config.getShowDetails())));
             alert.setMonitoringTool(APP_DYNAMICS);
             return alert;
         }
@@ -47,7 +47,7 @@ public class AlertBuilder {
             alert.setEntityDisplayName(getEntityDisplayName(otherEvent));
             alert.setAdEventType(getEventTypes(otherEvent));
             alert.setAlertUrl(getAlertUrl(otherEvent));
-            alert.setApDetails(getSummary(otherEvent));
+            alert.setApDetails(getSummary(otherEvent,Boolean.valueOf(config.getShowDetails())));
             alert.setMonitoringTool(APP_DYNAMICS);
             return alert;
         }
@@ -108,7 +108,7 @@ public class AlertBuilder {
         return Alert.MessageTypeEnum.INFO;
     }
 
-    private AlertDetails getSummary(HealthRuleViolationEvent violationEvent) {
+    private AlertDetails getSummary(HealthRuleViolationEvent violationEvent,boolean showDetails) {
         AlertHeatlhRuleVioEventDetails details = new AlertHeatlhRuleVioEventDetails();
         details.setApplicationId(violationEvent.getAppID());
         details.setApplicationName(violationEvent.getAppName());
@@ -119,14 +119,16 @@ public class AlertBuilder {
         details.setAffectedEntityType(violationEvent.getAffectedEntityType());
         details.setAffectedEntityName(violationEvent.getAffectedEntityName());
         details.setIncidentId(violationEvent.getIncidentID());
-        for(EvaluationEntity eval : violationEvent.getEvaluationEntity()){
-            AlertEvaluationEntity alertEval = buildAlertEvalutionEntity(eval);
-            details.getEvaluationEntities().add(alertEval);
+        if(showDetails) {
+            for (EvaluationEntity eval : violationEvent.getEvaluationEntity()) {
+                AlertEvaluationEntity alertEval = buildAlertEvalutionEntity(eval);
+                details.getEvaluationEntities().add(alertEval);
+            }
         }
         return details;
     }
 
-    private AlertDetails getSummary(OtherEvent otherEvent) {
+    private AlertDetails getSummary(OtherEvent otherEvent,boolean showDetails) {
         AlertOtherEventDetails details = new AlertOtherEventDetails();
         details.setApplicationId(otherEvent.getAppID());
         details.setApplicationName(otherEvent.getAppName());
@@ -141,15 +143,17 @@ public class AlertBuilder {
             alertEventType.setEventTypeNum(eventType.getEventTypeNum());
             details.getEventTypes().add(alertEventType);
         }
-        for(EventSummary eventSummary : otherEvent.getEventSummaries()){
-            AlertEventSummary alertSummary = new AlertEventSummary();
-            alertSummary.setEventSummaryId(eventSummary.getEventSummaryId());
-            alertSummary.setEventSummaryTime(eventSummary.getEventSummaryTime());
-            alertSummary.setEventSummaryType(eventSummary.getEventSummaryType());
-            alertSummary.setEventSummarySeverity(eventSummary.getEventSummarySeverity());
-            alertSummary.setEventSummaryString(eventSummary.getEventSummaryString());
-            alertSummary.setEventSummaryDeepLinkUrl(otherEvent.getDeepLinkUrl()+alertSummary.getEventSummaryId());
-            details.getEventSummaries().add(alertSummary);
+        if(showDetails) {
+            for (EventSummary eventSummary : otherEvent.getEventSummaries()) {
+                AlertEventSummary alertSummary = new AlertEventSummary();
+                alertSummary.setEventSummaryId(eventSummary.getEventSummaryId());
+                alertSummary.setEventSummaryTime(eventSummary.getEventSummaryTime());
+                alertSummary.setEventSummaryType(eventSummary.getEventSummaryType());
+                alertSummary.setEventSummarySeverity(eventSummary.getEventSummarySeverity());
+                alertSummary.setEventSummaryString(eventSummary.getEventSummaryString());
+                alertSummary.setEventSummaryDeepLinkUrl(otherEvent.getDeepLinkUrl() + alertSummary.getEventSummaryId());
+                details.getEventSummaries().add(alertSummary);
+            }
         }
         return details;
     }

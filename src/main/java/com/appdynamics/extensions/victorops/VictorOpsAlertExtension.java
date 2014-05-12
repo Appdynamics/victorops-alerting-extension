@@ -1,12 +1,12 @@
 package com.appdynamics.extensions.victorops;
 
+import com.appdynamics.extensions.alerts.customevents.Event;
+import com.appdynamics.extensions.alerts.customevents.EventBuilder;
+import com.appdynamics.extensions.alerts.customevents.HealthRuleViolationEvent;
+import com.appdynamics.extensions.alerts.customevents.OtherEvent;
 import com.appdynamics.extensions.http.Response;
-import com.appdynamics.extensions.victorops.api.appdynamics.Event;
-import com.appdynamics.extensions.victorops.api.appdynamics.EventBuilder;
-import com.appdynamics.extensions.victorops.api.appdynamics.HealthRuleViolationEvent;
-import com.appdynamics.extensions.victorops.api.appdynamics.OtherEvent;
-import com.appdynamics.extensions.victorops.api.victorops.Alert;
-import com.appdynamics.extensions.victorops.api.victorops.AlertBuilder;
+import com.appdynamics.extensions.victorops.api.Alert;
+import com.appdynamics.extensions.victorops.api.AlertBuilder;
 import com.appdynamics.extensions.victorops.common.ConfigUtil;
 import com.appdynamics.extensions.victorops.common.HttpHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -62,13 +62,13 @@ public class VictorOpsAlertExtension {
     }
 
     /**
-     * Creates an AppDynamics health rule event from the command line arguments, builds an VictorOps
+     * Creates an AppDynamics health rule event from the https://github.com/Appdynamics/alerting-exts-commons.gitcommand line arguments, builds an VictorOps
      * Alert from the health rule event and posts it to VictorOps.
      * @param args
      * @return false incase of an error else true;
      */
     public boolean processAnEvent(String[] args) {
-        Event event = eventBuilder.build(args,config);
+        Event event = eventBuilder.build(args);
         if (event != null) {
             Alert alert = null;
             if(event instanceof HealthRuleViolationEvent) {

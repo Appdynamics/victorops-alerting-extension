@@ -1,8 +1,10 @@
-package com.appdynamics.extensions.victorops.api.victorops;
+package com.appdynamics.extensions.victorops.api;
 
 
+import com.appdynamics.extensions.alerts.customevents.HealthRuleViolationEvent;
 import com.appdynamics.extensions.victorops.Configuration;
-import com.appdynamics.extensions.victorops.api.appdynamics.HealthRuleViolationEvent;
+import com.appdynamics.extensions.victorops.api.Alert;
+import com.appdynamics.extensions.victorops.api.AlertBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Assert;
 import org.junit.Test;

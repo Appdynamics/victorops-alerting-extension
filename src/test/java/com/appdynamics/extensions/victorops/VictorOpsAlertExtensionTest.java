@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.victorops.api;
+package com.appdynamics.extensions.victorops;
 
 
 import com.appdynamics.extensions.victorops.Configuration;
@@ -16,7 +16,7 @@ public class VictorOpsAlertExtensionTest {
     ConfigUtil<Configuration> configUtil = new ConfigUtil<Configuration>();
 
     @Test
-    public void canPostHRViolationEventWithOneEvalEntityAndTriggerNoBaselineToVictorOps() throws FileNotFoundException {
+    public void canPostHRViolationEventWithMultipleEntityAndTriggerMultipleBaselineToVictorOps() throws FileNotFoundException {
         Configuration configuration = configUtil.readConfig(this.getClass().getResource("/conf/config.yaml").getFile(),Configuration.class);
         VictorOpsAlertExtension alertExtension = new VictorOpsAlertExtension(configuration);
         alertExtension.processAnEvent(eventArgs.getHealthRuleViolationEventWithMultipleEvalEntityAndMultipleTriggerBaseline());
@@ -25,6 +25,21 @@ public class VictorOpsAlertExtensionTest {
     @Test
     public void canPostOtherEventToVictorOps() throws FileNotFoundException {
         Configuration configuration = configUtil.readConfig(this.getClass().getResource("/conf/config.yaml").getFile(),Configuration.class);
+        VictorOpsAlertExtension alertExtension = new VictorOpsAlertExtension(configuration);
+        alertExtension.processAnEvent(eventArgs.getOtherEvent());
+    }
+
+    @Test
+    public void canPostHRViolationEventWithMultipleEvalEntityAndTriggerMultipleBaselineNoDetailsToVictorOps() throws FileNotFoundException {
+        Configuration configuration = configUtil.readConfig(this.getClass().getResource("/conf/config.yaml.noDetails").getFile(),Configuration.class);
+        VictorOpsAlertExtension alertExtension = new VictorOpsAlertExtension(configuration);
+        alertExtension.processAnEvent(eventArgs.getHealthRuleViolationEventWithMultipleEvalEntityAndMultipleTriggerBaseline());
+    }
+
+
+    @Test
+    public void canPostOtherEventWithNoDetailsToVictorOps() throws FileNotFoundException {
+        Configuration configuration = configUtil.readConfig(this.getClass().getResource("/conf/config.yaml.noDetails").getFile(),Configuration.class);
         VictorOpsAlertExtension alertExtension = new VictorOpsAlertExtension(configuration);
         alertExtension.processAnEvent(eventArgs.getOtherEvent());
     }

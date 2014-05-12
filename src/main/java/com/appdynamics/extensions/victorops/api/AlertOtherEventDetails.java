@@ -1,4 +1,4 @@
-package com.appdynamics.extensions.victorops.api.victorops;
+package com.appdynamics.extensions.victorops.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

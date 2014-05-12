@@ -1,8 +1,14 @@
-package com.appdynamics.extensions.victorops.api.appdynamics;
+package com.appdynamics.extensions.victorops.api;
 
 
-public class EventType {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class AlertEventType {
+
+    @JsonProperty("Event Type")
     private String eventType;
+
+    @JsonProperty("Event Type Number")
     private String eventTypeNum;
 
     public String getEventType() {

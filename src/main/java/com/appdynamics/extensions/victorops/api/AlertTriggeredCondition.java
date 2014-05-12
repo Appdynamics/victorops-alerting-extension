@@ -1,19 +1,44 @@
-package com.appdynamics.extensions.victorops.api.appdynamics;
+package com.appdynamics.extensions.victorops.api;
 
 
-public class TriggerCondition {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class AlertTriggeredCondition {
+
+    @JsonProperty("Scope Type")
     private String scopeType;
+
+    @JsonProperty("Scope Name")
     private String scopeName;
+
+    @JsonProperty("Scope ID")
     private String scopeId;
+
+    @JsonProperty("Condition Name")
     private String conditionName;
+
+    @JsonProperty("Condition Id")
     private String conditionId;
+
+    @JsonProperty("Operator")
     private String operator;
+
+    @JsonProperty("Condition Unit Type")
     private String conditionUnitType;
+
+    @JsonProperty("Use Default Baseline")
     private boolean useDefaultBaseline;
+
+    @JsonProperty("Baseline name")
     private String baselineName;
+
+    @JsonProperty("Baseline id")
     private String baselineId;
+
+    @JsonProperty("Threshold value")
     private String thresholdValue;
+
+    @JsonProperty("Observed value")
     private String observedValue;
 
     public String getScopeType() {
