@@ -1,9 +1,6 @@
 package com.appdynamics.extensions.victorops;
 
 
-import com.appdynamics.extensions.victorops.Configuration;
-import com.appdynamics.extensions.victorops.EventArgs;
-import com.appdynamics.extensions.victorops.VictorOpsAlertExtension;
 import com.appdynamics.extensions.victorops.common.ConfigUtil;
 import org.junit.Test;
 

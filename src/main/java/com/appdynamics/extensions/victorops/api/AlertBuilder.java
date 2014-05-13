@@ -27,7 +27,7 @@ public class AlertBuilder {
             alert.setStateMessage(violationEvent.getSummaryMessage());
             alert.setEntityDisplayName(getEntityDisplayName(violationEvent));
             alert.setAdEventType(violationEvent.getEventType());
-            alert.setAlertUrl(getAlertUrl(violationEvent));
+            alert.setAlertUrl(violationEvent.getIncidentUrl());
             alert.setApDetails(getSummary(violationEvent,Boolean.valueOf(config.getShowDetails())));
             alert.setMonitoringTool(APP_DYNAMICS);
             return alert;
@@ -78,9 +78,7 @@ public class AlertBuilder {
         return mapper.writeValueAsString(alert);
     }
 
-    private String getAlertUrl(HealthRuleViolationEvent violationEvent) {
-        return violationEvent.getDeepLinkUrl()+violationEvent.getIncidentID();
-    }
+
 
     private String getAlertUrl(OtherEvent otherEvent) {
         if(otherEvent.getEventSummaries().get(0)  != null) {
