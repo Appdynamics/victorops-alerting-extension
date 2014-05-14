@@ -88,6 +88,6 @@ Find out more in the [AppDynamics Exchange](http://community.appdynamics.com/t5/
 
 For any questions or feature request, please contact [AppDynamics Center of Excellence](mailto:ace-request@appdynamics.com).
 
-**Version:** 1.0
+**Version:** 1.0.2
 **Controller Compatibility:** 3.7+
 
