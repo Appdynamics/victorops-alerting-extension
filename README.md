@@ -11,7 +11,7 @@ VictorOps is an on-call management + incident notification platform. The VictorO
 
 ### Steps
 
-1. Run "mvn clean install"
+1. Run "mvn clean install -DskipTests". You can run the tests by configuring the VictorOps org and routing key in the config.yaml in the test resources folder. 
 
 2. Find the zip file at 'target/victorops-alert.zip' or Download the VictorOps Alerting Extension zip from [AppDynamics Exchange](http://community.appdynamics.com/t5/AppDynamics-eXchange/idb-p/extensions)
 
