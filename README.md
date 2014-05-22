@@ -46,7 +46,7 @@ VictorOps is an on-call management + incident notification platform. The VictorO
 5. Update the config.yaml file in <CONTROLLER_HOME_DIR>/custom/actions/victorops-alert/conf/ directory with the Organization Key, Routing Key. You can also configure the level of details sent to VictorOps.
  
 ###Note
-	Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml     validator http://yamllint.com/
+Please make sure to not use tab (\t) while editing yaml files. You may want to validate the yaml file using a yaml     validator http://yamllint.com/
 
 	
   ```
