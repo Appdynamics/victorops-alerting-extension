@@ -16,8 +16,10 @@ public class AlertBuilderTest {
         HealthRuleViolationEvent hrv = createHealthRuleViolationEvent();
         Configuration config = createConfig();
         Alert alert = alertBuilderTest.buildAlertFromHealthRuleViolationEvent(hrv, config);
+        Assert.assertTrue(alert.getAlertUrl().startsWith("http://controller.host:8090"));
         String alertJson = alertBuilderTest.convertIntoJsonString(alert);
         Assert.assertTrue(alertJson != null);
+
     }
 
     private Configuration createConfig() {
@@ -26,6 +28,7 @@ public class AlertBuilderTest {
         config.setVoAlertHost("alertHost");
         config.setVoOrganizationKey("orgKey");
         config.setVoRoutingKey("routeKey");
+        config.setControllerUrl("http://controller.host:8090");
         return config;
     }
 
@@ -37,7 +40,7 @@ public class AlertBuilderTest {
         hrv.setAffectedEntityType("affectedEntityType");
         hrv.setIncidentID("incidentId");
         hrv.setSummaryMessage("summaryMessage");
-        hrv.setDeepLinkUrl("url");
+        hrv.setDeepLinkUrl("http://windows:8080/mylocation#/test");
         hrv.setHealthRuleID("ruleId");
         hrv.setHealthRuleName("ruleName");
         hrv.setPvnAlertTime("pvnAlertTime");

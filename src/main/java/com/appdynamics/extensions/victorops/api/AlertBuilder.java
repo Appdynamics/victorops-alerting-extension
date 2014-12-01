@@ -4,6 +4,7 @@ import com.appdynamics.extensions.alerts.customevents.*;
 import com.appdynamics.extensions.victorops.Configuration;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import org.apache.log4j.Logger;
 
 /**
@@ -27,12 +28,36 @@ public class AlertBuilder {
             alert.setStateMessage(violationEvent.getSummaryMessage());
             alert.setEntityDisplayName(getEntityDisplayName(violationEvent));
             alert.setAdEventType(violationEvent.getEventType());
-            alert.setAlertUrl(violationEvent.getIncidentUrl());
+            alert.setAlertUrl(getAlertUrl(config.getControllerUrl(), violationEvent));
             alert.setApDetails(getSummary(violationEvent,Boolean.valueOf(config.getShowDetails())));
             alert.setMonitoringTool(APP_DYNAMICS);
             return alert;
         }
         return null;
+    }
+
+    private String getAlertUrl(String controllerUrl, Event event) {
+        String url = event.getDeepLinkUrl();
+        if(Strings.isNullOrEmpty(controllerUrl)){
+            return url;
+        }
+        int startIdx = 0;
+        if(url.startsWith("http://")){
+            startIdx = "http://".length();
+        }
+        else if(url.startsWith("https://")){
+            startIdx = "https://".length();
+        }
+        int endIdx = url.indexOf("/",startIdx + 1);
+        String toReplace = url.substring(0,endIdx);
+        String alertUrl = url.replaceFirst(toReplace,controllerUrl);
+        if(event instanceof HealthRuleViolationEvent){
+            alertUrl += ((HealthRuleViolationEvent) event).getIncidentID();
+        }
+        else{
+            alertUrl += ((OtherEvent) event).getEventSummaries().get(0).getEventSummaryId();
+        }
+        return alertUrl;
     }
 
 
@@ -46,7 +71,7 @@ public class AlertBuilder {
             alert.setStateMessage(getEventSummaries(otherEvent));
             alert.setEntityDisplayName(getEntityDisplayName(otherEvent));
             alert.setAdEventType(getEventTypes(otherEvent));
-            alert.setAlertUrl(getAlertUrl(otherEvent));
+            alert.setAlertUrl(getAlertUrl(config.getControllerUrl(),otherEvent));
             alert.setApDetails(getSummary(otherEvent,Boolean.valueOf(config.getShowDetails())));
             alert.setMonitoringTool(APP_DYNAMICS);
             return alert;
@@ -88,7 +113,7 @@ public class AlertBuilder {
     }
 
     private Alert.MessageTypeEnum getMessageType(HealthRuleViolationEvent violationEvent) {
-        if(violationEvent.getEventType() != null && violationEvent.getEventType().equalsIgnoreCase("POLICY_CLOSE")){
+        if(violationEvent.getEventType() != null && violationEvent.getEventType().startsWith("POLICY_CLOSE")){
             return Alert.MessageTypeEnum.RECOVERY;
         }
         return getMessageType(violationEvent.getSeverity());

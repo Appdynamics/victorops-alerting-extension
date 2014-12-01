@@ -1,8 +1,8 @@
 #VictorOps Org Key
-voOrganizationKey: ""
+voOrganizationKey: "2ada4c3d-834e-415b-a94a-30e06e009f9b"
 
 #VictorOps Routing Key
-voRoutingKey: ""
+voRoutingKey: "victor-ops"
 
 #scheme used (http/https)
 protocol: "https"
@@ -19,3 +19,6 @@ socketTimeout: 20000
 
 #show appdynamics details in VO alert
 showDetails: true
+
+#public url for controller (http://<host>:<port> or https://<host>:<port>)
+controllerUrl : "http://mywindows.appdynamics.com:8090"

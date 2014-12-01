@@ -11,6 +11,7 @@ public class Configuration {
     private String socketTimeout = "10000";
     private String voAlertUrlPath;
     private String showDetails = "false";
+    private String controllerUrl;
 
     public String getShowDetails() {
         return showDetails;
@@ -76,5 +77,11 @@ public class Configuration {
         this.voAlertUrlPath = voAlertUrlPath;
     }
 
+    public String getControllerUrl() {
+        return controllerUrl;
+    }
 
+    public void setControllerUrl(String controllerUrl) {
+        this.controllerUrl = controllerUrl;
+    }
 }

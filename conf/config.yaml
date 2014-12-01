@@ -20,5 +20,6 @@ socketTimeout: 10000
 #show appdynamics details in VO alert
 showDetails: false
 
-
+#public url for controller (http://<host>:<port> or https://<host>:<port>)
+controllerUrl : ""
 
