@@ -210,7 +210,7 @@ public class EventArgs {
         strings.add("WARN"); //event summary severity 2
         strings.add("summary string"); //event summary string 2
 
-        strings.add("\"http://PRINHYLTPHP0158:8090/controller/#location=APP_EVENT_VIEWER_MODAL&eventSummary=\"");
+        strings.add("\"http://PRINHYLTPHP0158:8090/controller/#location=APP_EVENT_VIEWER_MODAL&amp;eventSummary=\"");
         return Iterables.toArray(strings,String.class);
     }
 
@@ -218,7 +218,7 @@ public class EventArgs {
         //summary message
         strings.add("\"CPU utilization is too high triggerded at Wed Apr 30 09:42:55 PDT 2014. This policy was violated because the following conditions were met for the MyMacMachineAgentNode1 Node for the last 1 minute(s):   For Evaluation Entity: MyMacMachineAgentNode1 Node - Hardware Resources|CPU|%Busy Condition is greater than 4. Observed value = 40.0\"");  //observed value 1
         strings.add("\"3\"");  //incident id
-        strings.add("\"http://WIN-OAR4D8QEG3K:8090/controller/#location=APP_INCIDENT_DETAIL&incident=\"");  //deep link url
+        strings.add("\"http://WIN-OAR4D8QEG3K:8090/controller/#location=APP_INCIDENT_DETAIL&amp;incident=\"");  //deep link url
         strings.add("\"POLICY_OPEN_CRITICAL\"");  //event type
     }
 
