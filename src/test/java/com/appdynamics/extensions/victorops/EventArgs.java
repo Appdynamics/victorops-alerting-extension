@@ -28,6 +28,8 @@ public class EventArgs {
         strings.add("\"40.0\"");  //observed value 1
 
         generateTrailingArg(strings);
+        strings.add("customer");
+        strings.add("2as32as234asdfasdfasdfasdf");
 
         return Iterables.toArray(strings,String.class);
     }
@@ -68,6 +70,8 @@ public class EventArgs {
 
         //summary message
         generateTrailingArg(strings);
+        strings.add("customer");
+        strings.add("2as32as234asdfasdfasdfasdf");
         return Iterables.toArray(strings,String.class);
     }
 
@@ -119,6 +123,8 @@ public class EventArgs {
 
         //summary message
         generateTrailingArg(strings);
+        strings.add("customer");
+        strings.add("2as32as234asdfasdfasdfasdf");
         return Iterables.toArray(strings,String.class);
 
     }
@@ -175,6 +181,8 @@ public class EventArgs {
 
         //summary message
         generateTrailingArg(strings);
+        strings.add("customer");
+        strings.add("2as32as234asdfasdfasdfasdf");
         return Iterables.toArray(strings,String.class);
     }
 
@@ -211,6 +219,8 @@ public class EventArgs {
         strings.add("summary string"); //event summary string 2
 
         strings.add("\"http://PRINHYLTPHP0158:8090/controller/#location=APP_EVENT_VIEWER_MODAL&amp;eventSummary=\"");
+        strings.add("customer");
+        strings.add("2as32as234asdfasdfasdfasdf");
         return Iterables.toArray(strings,String.class);
     }
 

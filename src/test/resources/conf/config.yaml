@@ -1,8 +1,8 @@
 #VictorOps Org Key
-voOrganizationKey: "2ada4c3d-834e-415b-a94a-30e06e009f9b"
+voOrganizationKey: ""
 
 #VictorOps Routing Key
-voRoutingKey: "victor-ops"
+voRoutingKey: ""
 
 #scheme used (http/https)
 protocol: "https"
